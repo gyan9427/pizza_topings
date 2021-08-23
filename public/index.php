@@ -4,6 +4,7 @@ include "../bootstrap.php";
 
 
 use Src\StatusMessage\Status;
+use Src\System\DatabaseConnector;
 
 header("Access-Control-Allow-Origin:*");
 header("Content-type:text/html,utf8");
@@ -26,3 +27,5 @@ if(!strpos($uri,"v1/")){
 }
 
 // var_dump($uri);
+
+$dbConnection = new DatabaseConnector();

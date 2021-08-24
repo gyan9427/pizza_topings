@@ -5,6 +5,7 @@ include "../bootstrap.php";
 
 use Src\StatusMessage\Status;
 use Src\System\DatabaseConnector;
+use Src\Controller\PizzaController;
 
 header("Access-Control-Allow-Origin:*");
 header("Content-type:text/html,utf8");
@@ -27,5 +28,9 @@ if(!strpos($uri,"v1/")){
 }
 
 // var_dump($uri);
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
-$dbConnection = new DatabaseConnector();
+$dbConnection = (new DatabaseConnector())->getConnection();
+
+$controller = new PizzaController($dbConnection,$requestMethod,$id);
+$controller->processRequest();

@@ -19,15 +19,17 @@ class PizzaController{
     }
 
     public function processRequest(){
+       
         switch ($this->requestMethod) {
             case 'GET':
-                $this->getAllTopings();
+                $response = $this->getAllTopings();
                 break;
             
             default:
                 # code...
                 break;
         }
+        
         header($response['status_code_header']);
         if($response['body']){
             echo $response['body'];
@@ -38,6 +40,6 @@ class PizzaController{
         $result = $this->topingsGateway->findAll();
         $response['status_code_header']= 'http:/1.1 200 OK';
         $response['body'] = json_encode($result);
-        return $result;
+        return $response;
     }
 }

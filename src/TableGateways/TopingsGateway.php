@@ -15,7 +15,7 @@ class TopingsGateway{
 
         try {
             $statement = $this->db->query($statement);
-            $result  = $statement->fetchAll(\PDO::FETCH_ASSPC);
+            $result  = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
         }catch(\PDOException $e){
             exit($e->getMessage());

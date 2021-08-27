@@ -10,10 +10,10 @@ class PizzaController{
 
     private $topingsGateway;
 
-    public function __construct($db,$requestMethod, $userId){
+    public function __construct($db,$requestMethod, $id){
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->userId = $userId;
+        $this->id = $id;
 
         $this->topingsGateway= new TopingsGateway($this->db);
     }
@@ -22,7 +22,13 @@ class PizzaController{
        
         switch ($this->requestMethod) {
             case 'GET':
-                $response = $this->getAllTopings();
+                if(!$this->id){
+                    $response = $this->getAllTopings();
+                }
+                else{
+                    $response = $this->getToping($this->id);
+                }
+                
                 break;
             
             default:
@@ -38,6 +44,13 @@ class PizzaController{
 
     public function getAllTopings(){
         $result = $this->topingsGateway->findAll();
+        $response['status_code_header']= 'http:/1.1 200 OK';
+        $response['body'] = json_encode($result);
+        return $response;
+    }
+
+    public function getToping($id){
+        $result = $this->topingsGateway->findToping($id);
         $response['status_code_header']= 'http:/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;

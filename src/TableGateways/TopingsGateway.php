@@ -21,4 +21,19 @@ class TopingsGateway{
             exit($e->getMessage());
         }
     }
+
+    public function findToping($id){
+        $statement = "
+        SELECT title FROM topings WHERE id = ?;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array($id));
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        }catch(\PDOException $e){
+            exit($e->getMessage());
+        }
+    }
 }
